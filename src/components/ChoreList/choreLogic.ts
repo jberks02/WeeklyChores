@@ -2,8 +2,8 @@ import { kea } from 'kea'
 
 export const choreLogic = kea({
     actions: {
-        check: true, // https://kea.js.org/docs/guide/concepts#actions
-        uncheck: true, // true is shorthand for a function that doesn't take any arguments
+        check: true, 
+        uncheck: true, 
     },
     reducers: {
         count: [
