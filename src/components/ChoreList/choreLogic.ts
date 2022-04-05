@@ -1,25 +1,38 @@
 import { kea } from 'kea'
+import { defaultChoreList } from 'utils/dayManagement';
 
-export const choreLogic = kea({
+const weekdays: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
+
+export const logic = kea({
     actions: {
-        check: true, 
-        uncheck: true, 
+        check: (chore: string) => ({chore}), 
+        uncheck: (chore: string) => ({chore}),
+        setChoreList: (allChores: choreApp.choreSet) => ({allChores})
     },
-    reducers: {
-        count: [
-           () => {
+    listeners: ({actions}) => ({
+        fetchChores: () => {
             try {
-                const stringyChoreList = window.localStorage.getItem('choreList');
-                console.log(stringyChoreList);
-                if(stringyChoreList === null) throw Error('No Chore Lists exists')
-                return {list: [...JSON.parse(stringyChoreList)]}
-            } catch {
-                return {list: []}
+                const storageItem = localStorage.getItem('chores');
+                if(storageItem === null) throw 'No Storage Item';
+                const savedSet: choreApp.choreSet = JSON.parse(storageItem);
+                actions.setChoreList(savedSet);
+            } catch (err) {
+                console.error('No saved chores. Using default set.')
+                actions.setChoreList(defaultChoreList)
             }
-           },
+        }
+    }),
+    reducers: {
+        chores: [
+           [],
             {
-                check: (chore: string) => console.log(chore),
-                uncheck: (chore: string) => console.log(chore),
+                check: (_, {choreListState}) => [...choreListState],
+                uncheck: (_, {choreListState}) => [...choreListState],
+                setChoreList: (_, {allChores}) => {
+                    const dayNum = new Date().getDay()
+                    const day = weekdays[dayNum];
+                    return allChores[day]
+                }
             },
         ],
     },
