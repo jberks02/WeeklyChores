@@ -11,7 +11,7 @@ export function _App(): JSX.Element | null {
         <div>
             <Header />
             <NewChoreInput/>
-            <Counter />
+            {/* <Counter /> */}
         </div>
     )
 }

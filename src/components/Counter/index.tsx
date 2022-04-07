@@ -8,6 +8,7 @@ export const Counter = () => {
     const { count } = useValues(counterLogic)
     const { incrementCounter, decrementCounter, updateCounter } = useActions(counterLogic)
     const [inputValue, setInputValue] = useState(0)
+    console.log(count)
     return (
         <div>
             <h3>{count}</h3>
