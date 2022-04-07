@@ -8,4 +8,9 @@ declare namespace choreApp {
         'Friday': string[];
         'Saturday': string[];
     }
+
+    interface choreUpdateArgument {
+        day: string, 
+        chore: string
+    }
 }

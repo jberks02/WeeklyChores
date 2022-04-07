@@ -9,26 +9,17 @@ import { logic } from './newChoreLogic'
 
 export const NewChoreInput = () => {
 
-    // const { check, uncheck, setChoreList, displayAllChores } = useActions(logic)
+    const { chores } = useValues(logic);
 
-    const {chores} = useValues(logic);
+    const {updateChore, loadChores, saveChores, removeChore} = useActions(logic);
 
-    console.log(chores)
-
-    const [fakeChores, setChores] = useState<choreApp.choreSet>({
-        'Sunday': ['foo', 'bar'],
-        'Monday': ['foo', 'bar'],
-        'Tuesday': ['foo', 'bar'],
-        'Wednesday': ['foo', 'bar'],
-        'Thursday': ['foo', 'bar'],
-        'Friday': ['foo', 'bar'],
-        'Saturday': ['foo', 'bar'],
-    })
-
-    // useEffect(() => {
-    //     displayAllChores()
-    //     console.log(choreSet)
-    // }, [Object.keys(choreSet).length])
+    useEffect(() => {
+        if(Object.keys(chores).length === 0) {
+            loadChores()
+        } else {
+            saveChores(chores)
+        }
+    }, [chores])
 
     const [newChoreField, setChoreField] = useState<SetStateAction<null | string>>(null)
     const [choreUpdate, setChoreUpdate] = useState('');
@@ -40,38 +31,31 @@ export const NewChoreInput = () => {
     const inputUpdate = (chore: string) => setChoreUpdate(chore)
 
     const addChoreToList = (day: string) => {
-        // fakeChores[day].push(choreUpdate);
-        setChores({
-            ...fakeChores,
-            [day]: [...fakeChores[day as keyof choreApp.choreSet], choreUpdate]
-        });
+        updateChore(day, choreUpdate)
         inputUpdate('')
         setChoreField(null)
     }
 
-    const remove = (chore: string, day: string) => {
-        console.log(fakeChores[day as keyof choreApp.choreSet], chore)
-        // fakeChores[day] = [...fakeChores[day].filter(y => y !== chore)]
-        setChores({
-            ...fakeChores,
-            [day]: [...fakeChores[day as keyof choreApp.choreSet].filter(y => y !== chore)]
-        })
-    }
+    const remove = (chore: string, day: string) => removeChore(day, chore)
 
     return (
         <Grid
             container
         >
-            {Object.keys(fakeChores).map((day: string) => {
+            {Object.keys(chores).map((day: string, i: number) => {
                 return (
-                    <>
+                    <Grid 
+                    container 
+                    item 
+                    style={{padding: 5}}
+                    key={day + i + 'list-container'}>
                         <Grid key={day + 'title'} item xs={2}>
                             <Typography>{day}</Typography>
                         </Grid>
                         <Grid key={day + 'chorelist'} item xs={9} style={{ maxHeight: 32 }}>
                             <Stack direction="row" spacing={1}>
                                 {
-                                    fakeChores[day as keyof choreApp.choreSet].map((chore, i) => (<Chip key={`${chore}-${day}-${i}`} label={chore} onDelete={() => remove(chore, day)} />))
+                                    chores[day as keyof choreApp.choreSet].map((chore: string, i: number) => (<Chip key={`${chore}-${day}-${i}`} label={chore} onDelete={() => remove(chore, day)} />))
                                 }
                                 {
                                     newChoreField && newChoreField === day &&
@@ -100,7 +84,7 @@ export const NewChoreInput = () => {
                                 <Add />
                             </IconButton>
                         </Grid>
-                    </>
+                    </Grid>
                 )
             })}
         </Grid>
