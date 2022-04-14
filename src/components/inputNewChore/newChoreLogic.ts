@@ -1,8 +1,6 @@
 import { kea } from 'kea'
 import { defaultChoreList } from '../../utils/dayManagement';
 
-const weekdays: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 export const logic = kea({
     actions: {
         // check: (chore: string) => ({chore}), 
@@ -55,8 +53,8 @@ export const logic = kea({
             {},
             {
                 setChores: (_, { chores }) => ({ ...chores }),
-                updateChore: (state, { day, chore }) => ({ ...state, [day]: [...state[day], chore] }), 
-                removeChore: (state, {day, chore}) => ({...state, [day]: [...state[day].filter((y: string) => y !== chore)] })
+                updateChore: (state: choreApp.choreSet, { day, chore }) => ({ ...state, [day]: [...state[day as keyof choreApp.choreSet], {chore, status: false}] }), 
+                removeChore: (state: choreApp.choreSet, { day, chore}) => ({...state, [day]: [...state[day as keyof choreApp.choreSet].filter((y) => y.chore !== chore)] })
             }
         ],
     },

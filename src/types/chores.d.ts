@@ -1,12 +1,17 @@
 declare namespace choreApp {
     interface choreSet {
-        'Sunday': string[];
-        'Monday': string[];
-        'Tuesday': string[];
-        'Wednesday': string[];
-        'Thursday': string[];
-        'Friday': string[];
-        'Saturday': string[];
+        'Sunday': chore[];
+        'Monday': chore[];
+        'Tuesday': chore[];
+        'Wednesday': chore[];
+        'Thursday': chore[];
+        'Friday': chore[];
+        'Saturday': chore[];
+    }
+
+    interface chore {
+        chore: string;
+        status: boolean
     }
 
     interface choreUpdateArgument {

@@ -55,7 +55,7 @@ export const NewChoreInput = () => {
                         <Grid key={day + 'chorelist'} item xs={9} style={{ maxHeight: 32 }}>
                             <Stack direction="row" spacing={1}>
                                 {
-                                    chores[day as keyof choreApp.choreSet].map((chore: string, i: number) => (<Chip key={`${chore}-${day}-${i}`} label={chore} onDelete={() => remove(chore, day)} />))
+                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip key={`${chore}-${day}-${i}`} label={chore.chore} onDelete={() => remove(chore.chore, day)} />))
                                 }
                                 {
                                     newChoreField && newChoreField === day &&
