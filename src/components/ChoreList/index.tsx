@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import {Grid} from '@mui/material'
 import Checkbox from '@mui/material/Checkbox';
 import { useValues, useActions } from 'kea'
 import { logic } from '../inputNewChore/newChoreLogic';
 import { weekdays } from '../../utils/dayManagement';
-const thirtyMinutes = 1000 * 60 * 60 * 30;
+const hours = 1000 * 60 * 60 * 60 * 6;
 
 // const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -15,9 +15,9 @@ export const ChoreCheck = () => {
 
     const { toggleChoreStatus, clearChoreStatuses } = useActions(logic)
 
-    const refreshTimeout = setTimeout(() => {
+    setInterval(() => {
         clearChoreStatuses();
-    }, thirtyMinutes);
+    }, hours);
 
     const getChoreList = () => {
         try {
@@ -43,12 +43,14 @@ export const ChoreCheck = () => {
     const list = getChoreList();
     
     return (
-        <FormGroup>
+        <>
             {
                 list.map((chore: choreApp.chore, i: number) => (
-                    <FormControlLabel key={chore.chore + i} control={<Checkbox checked={chore.status} />} label={chore.chore}  onClick={() => toggleChoreStatus(day, chore.chore)} />
+                    <Grid key={chore.chore + i} item xs={4} style={{paddingTop: 10, paddingBottom: 10}}>
+                        <FormControlLabel style={{margin: 0}}  control={<Checkbox checked={chore.status} />} label={chore.chore}  onClick={() => toggleChoreStatus(day, chore.chore)} />
+                    </Grid>
                 ))
             }
-        </FormGroup>
+        </>
       );
 }

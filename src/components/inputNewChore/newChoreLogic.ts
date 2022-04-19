@@ -1,5 +1,6 @@
 import { kea } from 'kea'
 import { defaultChoreList, weekdays } from '../../utils/dayManagement';
+import { randomNumber } from '../../utils/numberGen'; 
 
 export const logic = kea({
     actions: {
@@ -75,11 +76,18 @@ export const logic = kea({
                 clearChoreStatuses: (state: choreApp.choreSet) => {
 
                     const today = weekdays[new Date().getDay()]
-                    console.log(today)
-                    Object.keys(state).forEach((day) => {
-                        if(day !== today)state[day as keyof choreApp.choreSet] = state[day as keyof choreApp.choreSet].map((x) => ({...x, status: false}))
-                    });
-                    return {...state}
+
+                    const randDay = weekdays[randomNumber(1,6)]
+                    
+                    if(today === 'Sunday' && state[randDay as keyof choreApp.choreSet].map((ch) => ch.status).includes(true)) {
+                        Object.keys(state).forEach((item: string) => {
+                            state[item as keyof choreApp.choreSet].forEach((ch: choreApp.chore) => {
+                                ch.status = false
+                            })
+                        })
+                        return {...state}
+                    } else return state
+                    
                 }
             }
         ],
