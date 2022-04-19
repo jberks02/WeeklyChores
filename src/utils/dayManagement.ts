@@ -7,3 +7,5 @@ export const defaultChoreList: choreApp.choreSet = {
     Friday: [{ status: false, chore: 'love family' }, { chore: 'glah', status: false }],
     Saturday: [{ status: false, chore: 'bedrooms' }, { chore: 'laundry', status: false }],
 }
+
+export const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

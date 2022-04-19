@@ -1,43 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import {Grid} from '@mui/material'
 import Checkbox from '@mui/material/Checkbox';
 import { useValues, useActions } from 'kea'
 import { logic } from '../inputNewChore/newChoreLogic';
+import { weekdays } from '../../utils/dayManagement';
+const hours = 1000 * 60 * 60 * 60 * 6;
 
-const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+// const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export const ChoreCheck = () => {
 
     const { chores } = useValues(logic);
 
+    const { toggleChoreStatus, clearChoreStatuses } = useActions(logic)
+
+    setInterval(() => {
+        clearChoreStatuses();
+    }, hours);
+
     const getChoreList = () => {
-        try{
+        try {
+
+        // clearChoreStatuses();
             
         const dayNum = new Date().getDay();
 
         const weekday = weekdays[dayNum];
 
-        return chores[weekday];
+        return chores[weekday] || [];
 
-        } catch {
+        } catch(err) {
+
+            console.log('failure to get chore list: ', err)
+
             return []
         }
     }
 
-    // const [choreList, updateChoreList] = useState(getChoreList())
+    const day = weekdays[new Date().getDay()]
 
-    // useEffect(() => {
-    //     updateChoreList(getChoreList())
-    // }, chores)
+    const list = getChoreList();
     
     return (
-        <FormGroup>
+        <>
             {
-                getChoreList().map((chore: choreApp.chore) => (
-                    <FormControlLabel control={<Checkbox checked={chore.status} />} label={chore.chore} />
+                list.map((chore: choreApp.chore, i: number) => (
+                    <Grid key={chore.chore + i} item xs={4} style={{paddingTop: 10, paddingBottom: 10}}>
+                        <FormControlLabel style={{margin: 0}}  control={<Checkbox checked={chore.status} />} label={chore.chore}  onClick={() => toggleChoreStatus(day, chore.chore)} />
+                    </Grid>
                 ))
             }
-        </FormGroup>
+        </>
       );
 }

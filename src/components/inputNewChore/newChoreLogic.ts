@@ -1,5 +1,6 @@
 import { kea } from 'kea'
-import { defaultChoreList } from '../../utils/dayManagement';
+import { defaultChoreList, weekdays } from '../../utils/dayManagement';
+import { randomNumber } from '../../utils/numberGen'; 
 
 export const logic = kea({
     actions: {
@@ -10,7 +11,9 @@ export const logic = kea({
         setChores: (chores: choreApp.choreSet) => ({ chores }),
         updateChore: (day: string, chore: string) => ({ day, chore }),
         saveChores: (chores: choreApp.choreSet) => (chores),
-        removeChore: (day: string, chore: string) => ({day, chore})
+        removeChore: (day: string, chore: string) => ({day, chore}),
+        toggleChoreStatus: (day: string, chore: string) => ({ chore, day }),
+        clearChoreStatuses: true
     },
     listeners: ({ actions }) => ({
         loadChores: () => {
@@ -54,7 +57,38 @@ export const logic = kea({
             {
                 setChores: (_, { chores }) => ({ ...chores }),
                 updateChore: (state: choreApp.choreSet, { day, chore }) => ({ ...state, [day]: [...state[day as keyof choreApp.choreSet], {chore, status: false}] }), 
-                removeChore: (state: choreApp.choreSet, { day, chore}) => ({...state, [day]: [...state[day as keyof choreApp.choreSet].filter((y) => y.chore !== chore)] })
+                removeChore: (state: choreApp.choreSet, { day, chore}) => ({...state, [day]: [...state[day as keyof choreApp.choreSet].filter((y) => y.chore !== chore)] }),
+                toggleChoreStatus: (state: choreApp.choreSet, { day, chore }) => {
+
+                    const todaysList = state[day as keyof choreApp.choreSet];
+
+                    const newList = todaysList.map((ch) => {
+                        if (chore === ch.chore) ch.status = !ch.status;
+                        return ch
+                    });
+
+                    return {
+                        ...state,
+                        [day]: newList
+                    }
+
+                },
+                clearChoreStatuses: (state: choreApp.choreSet) => {
+
+                    const today = weekdays[new Date().getDay()]
+
+                    const randDay = weekdays[randomNumber(1,6)]
+                    
+                    if(today === 'Sunday' && state[randDay as keyof choreApp.choreSet].map((ch) => ch.status).includes(true)) {
+                        Object.keys(state).forEach((item: string) => {
+                            state[item as keyof choreApp.choreSet].forEach((ch: choreApp.chore) => {
+                                ch.status = false
+                            })
+                        })
+                        return {...state}
+                    } else return state
+                    
+                }
             }
         ],
     },

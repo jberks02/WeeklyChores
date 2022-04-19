@@ -1,4 +1,6 @@
-#backgroundDiv {
-    background-color: #4455ebdc;
-    width: 100%
+.backgroundDiv {
+    background-color: #df2525;
+    /* width: 100%; */
+    padding: 20px;
+    color: #EEE;
 }
