@@ -4,7 +4,7 @@ export const defaultChoreList: choreApp.choreSet = {
     Tuesday: [{ status: false, chore: 'dishes' }, { chore: 'kitchen', status: false }],
     Wednesday: [{ status: false, chore: 'laundry' }, { chore: 'Trash', status: false }],
     Thursday: [{ status: false, chore: 'livingRoom' }, { chore: 'dishes', status: false }],
-    Friday: [{ status: false, chore: 'love family' }, { chore: 'glah', status: false }],
+    Friday: [{ status: false, chore: 'dishes' }, { chore: 'livingroom', status: false }],
     Saturday: [{ status: false, chore: 'bedrooms' }, { chore: 'laundry', status: false }],
 }
 
