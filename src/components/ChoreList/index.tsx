@@ -44,14 +44,14 @@ export const ChoreCheck = () => {
     const list = getChoreList();
     
     return (
-        <>
+        <Grid container direction='row' >
             {
                 list.map((chore: choreApp.chore, i: number) => (
-                    <Grid key={chore.chore + i} item xs={4} style={{paddingTop: 10, paddingBottom: 10}}>
+                    <Grid key={chore.chore + i} item xs={12} sm={6} md={4} style={{paddingTop: 10, paddingBottom: 10}}>
                         <FormControlLabel style={{margin: 0}}  control={<Checkbox checked={chore.status} size="medium" />} label={<Typography style={{fontSize: 35}} >{chore.chore}</Typography>}  onClick={() => toggleChoreStatus(day, chore.chore)} />
                     </Grid>
                 ))
             }
-        </>
+        </Grid>
       );
 }
