@@ -11,7 +11,7 @@ export const NewChoreInput = () => {
 
     const { chores } = useValues(logic);
 
-    const {updateChore, loadChores, saveChores, removeChore} = useActions(logic);
+    const {updateChore, loadChores, saveChores, removeChore, toggleChoreStatus} = useActions(logic);
 
     useEffect(() => {
         if(Object.keys(chores).length === 0) {
@@ -50,12 +50,12 @@ export const NewChoreInput = () => {
                     style={{padding: 5}}
                     key={day + i + 'list-container'}>
                         <Grid key={day + 'title'} item xs={2}>
-                            <Typography>{day}</Typography>
+                            <Typography style={{fontSize: 30}}>{day}</Typography>
                         </Grid>
                         <Grid key={day + 'chorelist'} item xs={9} style={{ maxHeight: 32 }}>
                             <Stack direction="row" spacing={1}>
                                 {
-                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE'}} key={`${chore}-${day}-${i}`} label={chore.chore} onDelete={() => remove(chore.chore, day)} />))
+                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE', fontSize: 30, padding: 20, borderRadius: 30}} key={`${chore}-${day}-${i}`} label={chore.chore} onClick={() => toggleChoreStatus(day, chore.chore)} onDelete={() => removeChore(day, chore.chore)} />))
                                 }
                                 {
                                     newChoreField && newChoreField === day &&
@@ -80,8 +80,8 @@ export const NewChoreInput = () => {
                             </Stack>
                         </Grid>
                         <Grid key={day + 'add item'} item xs={1}>
-                            <IconButton onClick={() => addButtonClick(day)}>
-                                <Add />
+                            <IconButton onClick={() => addButtonClick(day)}  >
+                                <Add style={{height: 30, width: 30}} />
                             </IconButton>
                         </Grid>
                     </Grid>
