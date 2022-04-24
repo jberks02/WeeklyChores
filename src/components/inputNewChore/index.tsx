@@ -45,17 +45,18 @@ export const NewChoreInput = () => {
             {Object.keys(chores).map((day: string, i: number) => {
                 return (
                     <Grid 
-                    container 
+                    container
+                    direction="row"
                     item 
                     style={{padding: 5}}
                     key={day + i + 'list-container'}>
-                        <Grid key={day + 'title'} item xs={2}>
+                        <Grid key={day + 'title'} item xs={3}>
                             <Typography style={{fontSize: 30}}>{day}</Typography>
                         </Grid>
-                        <Grid key={day + 'chorelist'} item xs={9} style={{ maxHeight: 32 }}>
-                            <Stack direction="row" spacing={1}>
+                        <Grid container direction='row'  key={day + 'chorelist'} item xs={8} >
+                            {/* <Stack direction="row" spacing={1}> */}
                                 {
-                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE', fontSize: 30, padding: 20, borderRadius: 30}} key={`${chore}-${day}-${i}`} label={chore.chore} onClick={() => toggleChoreStatus(day, chore.chore)} onDelete={() => removeChore(day, chore.chore)} />))
+                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE', fontSize: 30, padding: 20, borderRadius: 30, margin: 2}} key={`${chore}-${day}-${i}`} label={chore.chore} onClick={() => toggleChoreStatus(day, chore.chore)} onDelete={() => removeChore(day, chore.chore)} />))
                                 }
                                 {
                                     newChoreField && newChoreField === day &&
@@ -77,11 +78,11 @@ export const NewChoreInput = () => {
                                         variant="standard"
                                     />
                                 }
-                            </Stack>
+                            {/* </Stack> */}
                         </Grid>
-                        <Grid key={day + 'add item'} item xs={1}>
+                        <Grid key={day + 'add item'} item xs={1} >
                             <IconButton onClick={() => addButtonClick(day)}  >
-                                <Add style={{height: 30, width: 30}} />
+                                <Add style={{height: 30, width: 30, }} />
                             </IconButton>
                         </Grid>
                     </Grid>
