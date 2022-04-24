@@ -29,7 +29,17 @@ Step 3: Assemble
 Follow the guide for the touch screen assembly but stop before putting on the top piece. 
 It'll need to be left off till we're sure that everything is working completely. 
 
-Step 4: Software
+Step 4: Git
+
+Install git using the command "sudo apt install git" This will allow us to pull down the code 
+base to the pi and run the install script. 
+
+Step 5: Clone repository
+
+With Git installed run the command "git clone https://github.com/jberks02/WeeklyChores.git"
+after the code base installs change directories into the base level of the codebase. "cd WeeklyChores"
+
+Step 6: Install
 
 run the install.sh script to setup the pi to automatically open to the chores screen in a
 full screen view.
