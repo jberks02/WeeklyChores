@@ -11,7 +11,7 @@ export const NewChoreInput = () => {
 
     const { chores } = useValues(logic);
 
-    const {updateChore, loadChores, saveChores, removeChore} = useActions(logic);
+    const {updateChore, loadChores, saveChores, removeChore, toggleChoreStatus} = useActions(logic);
 
     useEffect(() => {
         if(Object.keys(chores).length === 0) {
@@ -55,7 +55,7 @@ export const NewChoreInput = () => {
                         <Grid key={day + 'chorelist'} item xs={9} style={{ maxHeight: 32 }}>
                             <Stack direction="row" spacing={1}>
                                 {
-                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE'}} key={`${chore}-${day}-${i}`} label={chore.chore} onDelete={() => remove(chore.chore, day)} />))
+                                    chores[day as keyof choreApp.choreSet].map((chore: choreApp.chore, i: number) => (<Chip style={{backgroundColor: chore.status ? '#86B049' : '#017ec3', color: '#EEE'}} key={`${chore}-${day}-${i}`} label={chore.chore} onClick={() => toggleChoreStatus(day, chore.chore)} onDelete={() => removeChore(day, chore.chore)} />))
                                 }
                                 {
                                     newChoreField && newChoreField === day &&
