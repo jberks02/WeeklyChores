@@ -10,8 +10,6 @@ sudo apt install nodejs
 
 sudo apt install npm 
 
-sudo apt install git
-
 # clone repo
 
 git clone https://github.com/jberks02/WeeklyChores.git
