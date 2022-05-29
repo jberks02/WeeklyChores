@@ -17,7 +17,7 @@ export const ChoreCheck = () => {
 
     setInterval(() => {
         clearChoreStatuses();
-        location.reload();
+        window.location.reload();
     }, hours);
 
     const getChoreList = () => {
